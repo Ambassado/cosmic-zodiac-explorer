@@ -16,22 +16,33 @@ export const SolarSystem = () => {
     <div className="relative w-full h-screen overflow-hidden">
       {/* Three.js Canvas */}
       <Canvas 
-        camera={{ position: [0, 20, 35], fov: 60 }}
+        camera={{ 
+          position: [0, 30, 45], 
+          fov: 75,
+          near: 0.1,
+          far: 1000
+        }}
         className="bg-space-deep"
       >
         <Suspense fallback={null}>
-          {/* Lighting */}
-          <ambientLight intensity={0.1} />
-          <pointLight position={[0, 0, 0]} intensity={2} />
+          {/* Enhanced Lighting */}
+          <ambientLight intensity={0.2} />
+          <pointLight position={[0, 0, 0]} intensity={3} decay={0.8} />
+          <directionalLight 
+            position={[10, 10, 5]} 
+            intensity={0.5} 
+            castShadow 
+          />
           
           {/* Background stars */}
           <Stars 
-            radius={300} 
-            depth={50} 
-            count={5000} 
-            factor={4} 
-            saturation={0} 
+            radius={500} 
+            depth={100} 
+            count={8000} 
+            factor={6} 
+            saturation={0.1} 
             fade 
+            speed={0.5}
           />
           
           {/* Sun */}
@@ -40,8 +51,8 @@ export const SolarSystem = () => {
             isSelected={selectedPlanet === 'sun'}
           />
           
-          {/* Planets */}
-          {planetData.map((planet) => (
+          {/* Planets with staggered rendering for performance */}
+          {planetData.map((planet, index) => (
             <Planet
               key={planet.name}
               data={planet}
@@ -52,14 +63,19 @@ export const SolarSystem = () => {
             />
           ))}
           
-          {/* Camera controls */}
+          {/* Camera controls with better settings */}
           <OrbitControls 
             enablePan={true}
             enableZoom={true}
             enableRotate={true}
-            minDistance={10}
-            maxDistance={100}
+            minDistance={15}
+            maxDistance={120}
             autoRotate={false}
+            autoRotateSpeed={0.5}
+            dampingFactor={0.05}
+            enableDamping={true}
+            maxPolarAngle={Math.PI}
+            minPolarAngle={0}
           />
         </Suspense>
       </Canvas>

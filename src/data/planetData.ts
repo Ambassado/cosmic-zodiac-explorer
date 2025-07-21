@@ -15,10 +15,10 @@ export interface PlanetData {
 export const planetData: PlanetData[] = [
   {
     name: 'Mercury',
-    radius: 0.3,
-    distance: 4,
+    radius: 0.4,
+    distance: 5,
     color: '#8C7853',
-    rotationSpeed: 0.01,
+    rotationSpeed: 0.015,
     orbitSpeed: 0.02,
     facts: [
       'Closest planet to the Sun',
@@ -32,11 +32,11 @@ export const planetData: PlanetData[] = [
   },
   {
     name: 'Venus',
-    radius: 0.45,
-    distance: 6,
+    radius: 0.5,
+    distance: 7.5,
     color: '#FFC649',
-    rotationSpeed: -0.005,
-    orbitSpeed: 0.015,
+    rotationSpeed: -0.008,
+    orbitSpeed: 0.016,
     facts: [
       'Hottest planet in the solar system',
       'Thick, toxic atmosphere',
@@ -49,11 +49,11 @@ export const planetData: PlanetData[] = [
   },
   {
     name: 'Earth',
-    radius: 0.5,
-    distance: 8,
+    radius: 0.55,
+    distance: 10,
     color: '#6B93D6',
     rotationSpeed: 0.02,
-    orbitSpeed: 0.01,
+    orbitSpeed: 0.012,
     facts: [
       'The only known planet with life',
       '71% of surface covered by water',
@@ -66,11 +66,11 @@ export const planetData: PlanetData[] = [
   },
   {
     name: 'Mars',
-    radius: 0.35,
-    distance: 10,
+    radius: 0.45,
+    distance: 13,
     color: '#CD5C5C',
     rotationSpeed: 0.018,
-    orbitSpeed: 0.008,
+    orbitSpeed: 0.009,
     facts: [
       'Known as the Red Planet',
       'Has polar ice caps',
@@ -83,11 +83,11 @@ export const planetData: PlanetData[] = [
   },
   {
     name: 'Jupiter',
-    radius: 1.2,
-    distance: 15,
+    radius: 1.4,
+    distance: 18,
     color: '#D8CA9D',
     rotationSpeed: 0.04,
-    orbitSpeed: 0.005,
+    orbitSpeed: 0.006,
     facts: [
       'Largest planet in our solar system',
       'Great Red Spot is a giant storm',
@@ -100,11 +100,11 @@ export const planetData: PlanetData[] = [
   },
   {
     name: 'Saturn',
-    radius: 1.0,
-    distance: 20,
+    radius: 1.2,
+    distance: 24,
     color: '#FAD5A5',
     rotationSpeed: 0.035,
-    orbitSpeed: 0.003,
+    orbitSpeed: 0.004,
     facts: [
       'Famous for its spectacular rings',
       'Less dense than water',
@@ -117,11 +117,11 @@ export const planetData: PlanetData[] = [
   },
   {
     name: 'Uranus',
-    radius: 0.8,
-    distance: 25,
+    radius: 0.9,
+    distance: 30,
     color: '#4FD0E7',
     rotationSpeed: 0.025,
-    orbitSpeed: 0.002,
+    orbitSpeed: 0.0025,
     facts: [
       'Rotates on its side (98° tilt)',
       'Made of water, methane, and ammonia',
@@ -134,11 +134,11 @@ export const planetData: PlanetData[] = [
   },
   {
     name: 'Neptune',
-    radius: 0.75,
-    distance: 30,
+    radius: 0.85,
+    distance: 36,
     color: '#4B70DD',
     rotationSpeed: 0.03,
-    orbitSpeed: 0.001,
+    orbitSpeed: 0.002,
     facts: [
       'Windiest planet (up to 2,100 km/h)',
       'Predicted mathematically before discovery',
@@ -153,7 +153,7 @@ export const planetData: PlanetData[] = [
 
 export const sunData = {
   name: 'Sun',
-  radius: 2,
+  radius: 2.5,
   color: '#FDB813',
   facts: [
     'Contains 99.86% of solar system\'s mass',
