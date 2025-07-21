@@ -52,6 +52,23 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				// Custom space theme colors
+				space: {
+					deep: 'hsl(var(--space-deep))',
+					medium: 'hsl(var(--space-medium))',
+					light: 'hsl(var(--space-light))'
+				},
+				nebula: {
+					purple: 'hsl(var(--nebula-purple))',
+					blue: 'hsl(var(--nebula-blue))',
+					pink: 'hsl(var(--nebula-pink))'
+				},
+				star: {
+					glow: 'hsl(var(--star-glow))'
+				},
+				cosmic: {
+					gold: 'hsl(var(--cosmic-gold))'
+				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
@@ -67,6 +84,15 @@ export default {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
+			},
+			backgroundImage: {
+				'gradient-nebula': 'var(--gradient-nebula)',
+				'gradient-space': 'var(--gradient-space)',
+				'gradient-cosmic': 'var(--gradient-cosmic)'
+			},
+			boxShadow: {
+				'glow': 'var(--shadow-glow)',
+				'cosmic': 'var(--shadow-cosmic)'
 			},
 			keyframes: {
 				'accordion-down': {
