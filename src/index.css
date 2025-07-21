@@ -44,13 +44,20 @@ All colors MUST be HSL.
     --nebula-purple: 280 70% 60%;
     --nebula-blue: 217 91% 60%;
     --nebula-pink: 320 70% 65%;
+    --nebula-orange: 25 90% 65%;
+    --nebula-magenta: 300 80% 70%;
+    --nebula-cyan: 190 90% 70%;
     --star-glow: 60 100% 85%;
     --cosmic-gold: 45 100% 75%;
     
-    /* Gradients */
-    --gradient-nebula: linear-gradient(135deg, hsl(var(--nebula-purple)) 0%, hsl(var(--nebula-blue)) 50%, hsl(var(--nebula-pink)) 100%);
-    --gradient-space: linear-gradient(180deg, hsl(var(--space-deep)) 0%, hsl(var(--space-medium)) 100%);
-    --gradient-cosmic: radial-gradient(ellipse at center, hsl(var(--nebula-blue) / 0.3) 0%, transparent 70%);
+    /* Enhanced nebula gradients */
+    --gradient-nebula: radial-gradient(ellipse at 30% 20%, hsl(var(--nebula-purple)) 0%, transparent 50%), 
+                       radial-gradient(ellipse at 70% 80%, hsl(var(--nebula-pink)) 0%, transparent 50%),
+                       radial-gradient(ellipse at 20% 70%, hsl(var(--nebula-blue)) 0%, transparent 50%),
+                       radial-gradient(ellipse at 80% 30%, hsl(var(--nebula-orange)) 0%, transparent 50%),
+                       radial-gradient(ellipse at 50% 50%, hsl(var(--nebula-magenta)) 0%, transparent 60%);
+    --gradient-space: linear-gradient(135deg, hsl(230 45% 4%) 0%, hsl(260 40% 8%) 25%, hsl(280 35% 6%) 50%, hsl(240 40% 8%) 75%, hsl(230 45% 4%) 100%);
+    --gradient-cosmic: radial-gradient(ellipse at center, hsl(var(--nebula-cyan) / 0.4) 0%, hsl(var(--nebula-purple) / 0.2) 40%, transparent 70%);
     
     /* Shadows */
     --shadow-glow: 0 0 20px hsl(var(--nebula-blue) / 0.5);
@@ -122,11 +129,15 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground overflow-hidden;
-    background: var(--gradient-space);
+    background: 
+      var(--gradient-nebula),
+      var(--gradient-space);
+    background-attachment: fixed;
     min-height: 100vh;
+    position: relative;
   }
   
-  /* Cosmic background effects */
+  /* Enhanced cosmic background effects with nebula-like colors */
   body::before {
     content: '';
     position: fixed;
@@ -135,22 +146,57 @@ All colors MUST be HSL.
     width: 100%;
     height: 100%;
     background: 
+      /* Bright stars with different colors */
       radial-gradient(2px 2px at 20px 30px, hsl(var(--star-glow)), transparent),
-      radial-gradient(2px 2px at 40px 70px, hsl(var(--star-glow)), transparent),
+      radial-gradient(2px 2px at 40px 70px, hsl(var(--nebula-cyan)), transparent),
       radial-gradient(1px 1px at 90px 40px, hsl(var(--star-glow)), transparent),
-      radial-gradient(1px 1px at 130px 80px, hsl(var(--star-glow)), transparent),
-      radial-gradient(2px 2px at 160px 30px, hsl(var(--star-glow)), transparent);
+      radial-gradient(1px 1px at 130px 80px, hsl(var(--nebula-pink)), transparent),
+      radial-gradient(2px 2px at 160px 30px, hsl(var(--star-glow)), transparent),
+      radial-gradient(1px 1px at 200px 60px, hsl(var(--nebula-blue)), transparent),
+      radial-gradient(2px 2px at 250px 90px, hsl(var(--star-glow)), transparent),
+      radial-gradient(1px 1px at 300px 20px, hsl(var(--nebula-orange)), transparent),
+      radial-gradient(2px 2px at 350px 50px, hsl(var(--star-glow)), transparent),
+      radial-gradient(1px 1px at 380px 80px, hsl(var(--nebula-magenta)), transparent);
     background-repeat: repeat;
-    background-size: 200px 100px;
-    animation: twinkle 10s ease-in-out infinite alternate;
+    background-size: 400px 120px;
+    animation: twinkle 8s ease-in-out infinite alternate, drift 20s linear infinite;
     pointer-events: none;
     z-index: 1;
   }
   
+  /* Additional nebula clouds effect */
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+      radial-gradient(ellipse 800px 400px at 20% 30%, hsl(var(--nebula-purple) / 0.3) 0%, transparent 50%),
+      radial-gradient(ellipse 600px 300px at 80% 70%, hsl(var(--nebula-orange) / 0.25) 0%, transparent 50%),
+      radial-gradient(ellipse 400px 600px at 60% 20%, hsl(var(--nebula-pink) / 0.2) 0%, transparent 50%),
+      radial-gradient(ellipse 500px 200px at 30% 80%, hsl(var(--nebula-cyan) / 0.15) 0%, transparent 50%);
+    animation: nebula-drift 30s ease-in-out infinite alternate;
+    pointer-events: none;
+    z-index: 0;
+  }
+  
   @keyframes twinkle {
-    0% { opacity: 0.3; }
-    50% { opacity: 0.8; }
-    100% { opacity: 0.3; }
+    0% { opacity: 0.4; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.2); }
+    100% { opacity: 0.4; transform: scale(1); }
+  }
+  
+  @keyframes drift {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50px); }
+  }
+  
+  @keyframes nebula-drift {
+    0% { transform: translateX(0) translateY(0) scale(1); opacity: 0.7; }
+    50% { transform: translateX(-20px) translateY(-10px) scale(1.1); opacity: 1; }
+    100% { transform: translateX(-40px) translateY(20px) scale(0.9); opacity: 0.7; }
   }
   
   /* Smooth scrolling and better typography */

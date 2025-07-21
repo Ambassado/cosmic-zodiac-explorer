@@ -61,7 +61,10 @@ export default {
 				nebula: {
 					purple: 'hsl(var(--nebula-purple))',
 					blue: 'hsl(var(--nebula-blue))',
-					pink: 'hsl(var(--nebula-pink))'
+					pink: 'hsl(var(--nebula-pink))',
+					orange: 'hsl(var(--nebula-orange))',
+					magenta: 'hsl(var(--nebula-magenta))',
+					cyan: 'hsl(var(--nebula-cyan))'
 				},
 				star: {
 					glow: 'hsl(var(--star-glow))'
