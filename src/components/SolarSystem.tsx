@@ -6,11 +6,17 @@ import { Planet } from './Planet';
 import { planetData } from '../data/planetData';
 import { PlanetInfo } from './PlanetInfo';
 import { SystemControls } from './SystemControls';
+import { Constellation } from './Constellation';
+import { AstrologyPanel } from './AstrologyPanel';
+import { constellations, ConstellationData } from '../data/constellationData';
 
 export const SolarSystem = () => {
   const [selectedPlanet, setSelectedPlanet] = useState<string | null>(null);
   const [animationSpeed, setAnimationSpeed] = useState(1);
   const [showOrbits, setShowOrbits] = useState(true);
+  const [viewMode, setViewMode] = useState<'science' | 'astrology'>('science');
+  const [selectedConstellation, setSelectedConstellation] = useState<ConstellationData | null>(null);
+  const [showAstrologyPanel, setShowAstrologyPanel] = useState(false);
 
   return (
     <div className="relative w-full h-screen overflow-hidden">
@@ -51,8 +57,8 @@ export const SolarSystem = () => {
             isSelected={selectedPlanet === 'sun'}
           />
           
-          {/* Planets with staggered rendering for performance */}
-          {planetData.map((planet, index) => (
+          {/* Planets - only shown in science mode */}
+          {viewMode === 'science' && planetData.map((planet, index) => (
             <Planet
               key={planet.name}
               data={planet}
@@ -60,6 +66,20 @@ export const SolarSystem = () => {
               showOrbit={showOrbits}
               onClick={() => setSelectedPlanet(planet.name)}
               isSelected={selectedPlanet === planet.name}
+            />
+          ))}
+
+          {/* Constellations - only shown in astrology mode */}
+          {viewMode === 'astrology' && constellations.map((constellation, index) => (
+            <Constellation
+              key={constellation.name}
+              constellation={constellation}
+              isVisible={showOrbits}
+              onClick={() => {
+                setSelectedConstellation(constellation);
+                setShowAstrologyPanel(true);
+              }}
+              isSelected={selectedConstellation?.name === constellation.name}
             />
           ))}
           
@@ -86,10 +106,13 @@ export const SolarSystem = () => {
         <div className="pointer-events-auto absolute top-6 left-6 right-6">
           <div className="bg-card/80 backdrop-blur-sm border border-border rounded-lg p-4 shadow-glow">
             <h1 className="text-2xl font-bold bg-gradient-nebula bg-clip-text text-transparent">
-              🌌 AI Solar System Explorer
+              {viewMode === 'science' ? '🌌 AI Solar System Explorer' : '✨ Celestial Astrology Guide'}
             </h1>
             <p className="text-muted-foreground mt-1">
-              Click planets to explore • Drag to orbit • Scroll to zoom
+              {viewMode === 'science' 
+                ? 'Click planets to explore • Drag to orbit • Scroll to zoom'
+                : 'Enter birth date • Click constellations • Discover your zodiac'
+              }
             </p>
           </div>
         </div>
@@ -101,11 +124,18 @@ export const SolarSystem = () => {
             showOrbits={showOrbits}
             onSpeedChange={setAnimationSpeed}
             onOrbitToggle={setShowOrbits}
+            viewMode={viewMode}
+            onViewModeChange={(mode) => {
+              setViewMode(mode);
+              setSelectedPlanet(null);
+              setSelectedConstellation(null);
+              setShowAstrologyPanel(false);
+            }}
           />
         </div>
         
-        {/* Planet Information Panel */}
-        {selectedPlanet && (
+        {/* Planet Information Panel - Science Mode */}
+        {viewMode === 'science' && selectedPlanet && (
           <div className="pointer-events-auto absolute bottom-6 left-6 right-6">
             <PlanetInfo
               planetName={selectedPlanet}
@@ -113,13 +143,42 @@ export const SolarSystem = () => {
             />
           </div>
         )}
+
+        {/* Astrology Panel - Astrology Mode */}
+        {viewMode === 'astrology' && showAstrologyPanel && (
+          <div className="pointer-events-auto absolute bottom-6 left-6 right-6">
+            <AstrologyPanel
+              selectedConstellation={selectedConstellation}
+              onClose={() => {
+                setShowAstrologyPanel(false);
+                setSelectedConstellation(null);
+              }}
+              onConstellationSelect={(constellation) => {
+                setSelectedConstellation(constellation);
+              }}
+            />
+          </div>
+        )}
         
         {/* Instructions for first-time users */}
-        {!selectedPlanet && (
+        {viewMode === 'science' && !selectedPlanet && (
           <div className="pointer-events-none absolute bottom-6 left-1/2 transform -translate-x-1/2">
             <div className="bg-card/60 backdrop-blur-sm border border-border rounded-lg px-4 py-2">
               <p className="text-sm text-muted-foreground text-center">
-                ✨ Click any celestial body to learn more about it
+                🌍 Click any planet to learn fascinating facts
+              </p>
+            </div>
+          </div>
+        )}
+
+        {viewMode === 'astrology' && !showAstrologyPanel && (
+          <div className="pointer-events-auto absolute bottom-6 left-1/2 transform -translate-x-1/2">
+            <div 
+              className="bg-card/60 backdrop-blur-sm border border-border rounded-lg px-4 py-2 cursor-pointer hover:bg-card/80 transition-all"
+              onClick={() => setShowAstrologyPanel(true)}
+            >
+              <p className="text-sm text-muted-foreground text-center">
+                ✨ Click here to discover your zodiac sign
               </p>
             </div>
           </div>

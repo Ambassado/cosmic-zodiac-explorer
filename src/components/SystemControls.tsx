@@ -1,86 +1,97 @@
+import { Card, CardContent } from './ui/card';
 import { Button } from './ui/button';
-import { Card } from './ui/card';
 import { Slider } from './ui/slider';
 import { Switch } from './ui/switch';
 import { Label } from './ui/label';
-import { Play, Pause, RotateCcw } from 'lucide-react';
+import { Play, Pause, RotateCcw, Eye, EyeOff, Telescope, Sparkles } from 'lucide-react';
 
 interface SystemControlsProps {
   animationSpeed: number;
   showOrbits: boolean;
   onSpeedChange: (speed: number) => void;
   onOrbitToggle: (show: boolean) => void;
+  viewMode: 'science' | 'astrology';
+  onViewModeChange: (mode: 'science' | 'astrology') => void;
 }
 
 export const SystemControls = ({ 
   animationSpeed, 
   showOrbits, 
   onSpeedChange, 
-  onOrbitToggle 
+  onOrbitToggle,
+  viewMode,
+  onViewModeChange
 }: SystemControlsProps) => {
   const isPaused = animationSpeed === 0;
 
-  const togglePlayPause = () => {
-    onSpeedChange(isPaused ? 1 : 0);
-  };
-
-  const resetSpeed = () => {
-    onSpeedChange(1);
-  };
-
   return (
-    <Card className="p-4 bg-card/80 backdrop-blur-sm border-border shadow-glow">
-      <div className="space-y-4 min-w-[200px]">
-        {/* Play/Pause Controls */}
-        <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={togglePlayPause}
-            className="flex items-center gap-2"
-          >
-            {isPaused ? <Play className="w-4 h-4" /> : <Pause className="w-4 h-4" />}
-            {isPaused ? 'Play' : 'Pause'}
-          </Button>
-          
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={resetSpeed}
-            className="flex items-center gap-2"
-          >
-            <RotateCcw className="w-4 h-4" />
-            Reset
-          </Button>
+    <Card className="bg-card/80 backdrop-blur-sm border border-border shadow-glow">
+      <CardContent className="p-4 space-y-4">
+        {/* View Mode Toggle */}
+        <div className="space-y-2">
+          <Label className="text-sm font-medium">View Mode</Label>
+          <div className="flex gap-1 p-1 bg-background/50 rounded-md">
+            <Button
+              variant={viewMode === 'science' ? 'default' : 'ghost'}
+              size="sm"
+              onClick={() => onViewModeChange('science')}
+              className="flex-1 h-8"
+            >
+              <Telescope className="w-3 h-3 mr-1" />
+              Science
+            </Button>
+            <Button
+              variant={viewMode === 'astrology' ? 'default' : 'ghost'}
+              size="sm"
+              onClick={() => onViewModeChange('astrology')}
+              className="flex-1 h-8"
+            >
+              <Sparkles className="w-3 h-3 mr-1" />
+              Astrology
+            </Button>
+          </div>
         </div>
 
         {/* Speed Control */}
         <div className="space-y-2">
-          <Label className="text-sm text-foreground">
-            Animation Speed: {animationSpeed.toFixed(1)}x
+          <Label className="text-sm font-medium flex items-center gap-2">
+            {isPaused ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+            Speed: {animationSpeed}x
           </Label>
           <Slider
             value={[animationSpeed]}
             onValueChange={(value) => onSpeedChange(value[0])}
-            max={5}
             min={0}
+            max={5}
             step={0.1}
             className="w-full"
           />
         </div>
-
+        
         {/* Orbit Toggle */}
         <div className="flex items-center justify-between">
-          <Label htmlFor="show-orbits" className="text-sm text-foreground">
-            Show Orbits
+          <Label htmlFor="orbits" className="text-sm font-medium flex items-center gap-2">
+            {showOrbits ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+            Show {viewMode === 'science' ? 'Orbits' : 'Constellations'}
           </Label>
           <Switch
-            id="show-orbits"
+            id="orbits"
             checked={showOrbits}
             onCheckedChange={onOrbitToggle}
           />
         </div>
-      </div>
+        
+        {/* Reset Button */}
+        <Button 
+          variant="outline" 
+          size="sm" 
+          onClick={() => onSpeedChange(1)}
+          className="w-full"
+        >
+          <RotateCcw className="w-4 h-4 mr-2" />
+          Reset
+        </Button>
+      </CardContent>
     </Card>
   );
 };
