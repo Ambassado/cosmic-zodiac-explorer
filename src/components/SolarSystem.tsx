@@ -8,6 +8,7 @@ import { PlanetInfo } from './PlanetInfo';
 import { SystemControls } from './SystemControls';
 import { Constellation } from './Constellation';
 import { AstrologyPanel } from './AstrologyPanel';
+import { ChatBot } from './ChatBot';
 import { constellations, ConstellationData } from '../data/constellationData';
 
 export const SolarSystem = () => {
@@ -184,6 +185,9 @@ export const SolarSystem = () => {
           </div>
         )}
       </div>
+      
+      {/* AI ChatBot */}
+      <ChatBot />
     </div>
   );
 };
