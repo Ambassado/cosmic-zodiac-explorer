@@ -39,31 +39,34 @@ export const Constellation = ({ constellation, isVisible, onClick, isSelected }:
     <group ref={groupRef} onClick={onClick}>
       {/* Render stars */}
       {constellation.stars.map((star, index) => (
-        <Sphere
-          key={star.id}
-          args={[0.1 + (5 - star.magnitude) * 0.05, 8, 8]}
-          position={[star.x, star.y, star.z]}
-        >
-          <meshBasicMaterial 
-            color={elementColor}
-            transparent
-            opacity={isSelected ? 1 : 0.8}
-          />
+        <group key={star.id} position={[star.x, star.y, star.z]}>
+          {/* Main star */}
+          <mesh>
+            <sphereGeometry args={[0.1 + (5 - star.magnitude) * 0.05, 8, 8]} />
+            <meshBasicMaterial 
+              color={elementColor}
+              transparent
+              opacity={isSelected ? 1 : 0.8}
+            />
+          </mesh>
           {/* Star glow effect */}
-          <Sphere args={[0.3 + (5 - star.magnitude) * 0.1, 8, 8]}>
+          <mesh>
+            <sphereGeometry args={[0.3 + (5 - star.magnitude) * 0.1, 8, 8]} />
             <meshBasicMaterial 
               color={elementColor}
               transparent
               opacity={0.2}
             />
-          </Sphere>
-        </Sphere>
+          </mesh>
+        </group>
       ))}
       
       {/* Render constellation lines */}
       {constellation.connections.map((connection, index) => {
         const start = constellation.stars[connection[0]];
         const end = constellation.stars[connection[1]];
+        
+        if (!start || !end) return null;
         
         const points = [
           new THREE.Vector3(start.x, start.y, start.z),
@@ -75,9 +78,9 @@ export const Constellation = ({ constellation, isVisible, onClick, isSelected }:
             key={`line-${index}`}
             points={points}
             color={elementColor}
-            transparent
-            opacity={isSelected ? 0.8 : 0.5}
             lineWidth={isSelected ? 3 : 2}
+            transparent={true}
+            opacity={isSelected ? 0.8 : 0.5}
           />
         );
       })}
