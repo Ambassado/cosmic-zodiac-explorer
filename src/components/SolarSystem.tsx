@@ -24,7 +24,7 @@ export const SolarSystem = () => {
       {/* Three.js Canvas */}
       <Canvas 
         camera={{ 
-          position: [0, 30, 45], 
+          position: viewMode === 'astrology' ? [0, 25, 35] : [0, 30, 45], 
           fov: 75,
           near: 0.1,
           far: 1000
@@ -72,10 +72,10 @@ export const SolarSystem = () => {
             />
           ))}
 
-          {/* Constellations - arranged in circular pattern around sun */}
+          {/* Constellations - arranged in perfect circle around sun at center */}
           {viewMode === 'astrology' && constellations.map((constellation, index) => {
             const angle = (index / constellations.length) * Math.PI * 2;
-            const radius = 35;
+            const radius = 30; // Closer to sun for better visibility
             const x = Math.cos(angle) * radius;
             const z = Math.sin(angle) * radius;
             
@@ -95,8 +95,9 @@ export const SolarSystem = () => {
           })}
 
           
-          {/* Camera controls with better settings */}
+          {/* Camera controls with center focus */}
           <OrbitControls 
+            target={[0, 0, 0]}
             enablePan={true}
             enableZoom={true}
             enableRotate={true}
