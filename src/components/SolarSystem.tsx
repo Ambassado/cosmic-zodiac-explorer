@@ -70,19 +70,27 @@ export const SolarSystem = () => {
             />
           ))}
 
-          {/* Constellations - only shown in astrology mode */}
-          {viewMode === 'astrology' && constellations.map((constellation, index) => (
-            <Constellation
-              key={constellation.name}
-              constellation={constellation}
-              isVisible={showOrbits}
-              onClick={() => {
-                setSelectedConstellation(constellation);
-                setShowAstrologyPanel(true);
-              }}
-              isSelected={selectedConstellation?.name === constellation.name}
-            />
-          ))}
+          {/* Constellations - arranged in circular pattern */}
+          {viewMode === 'astrology' && constellations.map((constellation, index) => {
+            const angle = (index / constellations.length) * Math.PI * 2;
+            const radius = 40;
+            const x = Math.cos(angle) * radius;
+            const z = Math.sin(angle) * radius;
+            
+            return (
+              <group key={constellation.name} position={[x, 0, z]}>
+                <Constellation
+                  constellation={constellation}
+                  isVisible={showOrbits}
+                  onClick={() => {
+                    setSelectedConstellation(constellation);
+                    setShowAstrologyPanel(true);
+                  }}
+                  isSelected={selectedConstellation?.name === constellation.name}
+                />
+              </group>
+            );
+          })}
           
           {/* Camera controls with better settings */}
           <OrbitControls 

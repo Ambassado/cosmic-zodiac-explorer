@@ -97,12 +97,6 @@ export const PlanetInfo = ({ planetName, onClose }: PlanetInfoProps) => {
           </div>
         </div>
 
-        {/* Future: Add astrology mode toggle here */}
-        <div className="mt-4 pt-4 border-t border-border">
-          <p className="text-xs text-muted-foreground">
-            💫 Astrology features coming soon! Switch between scientific and astrological insights.
-          </p>
-        </div>
       </div>
     </Card>
   );
