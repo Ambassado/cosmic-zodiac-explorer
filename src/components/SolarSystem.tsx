@@ -52,11 +52,13 @@ export const SolarSystem = () => {
             speed={0.5}
           />
           
-          {/* Sun */}
-          <Sun 
-            onClick={() => setSelectedPlanet('sun')}
-            isSelected={selectedPlanet === 'sun'}
-          />
+          {/* Sun - always at center */}
+          <group position={[0, 0, 0]}>
+            <Sun 
+              onClick={() => setSelectedPlanet('sun')}
+              isSelected={selectedPlanet === 'sun'}
+            />
+          </group>
           
           {/* Planets - only shown in science mode */}
           {viewMode === 'science' && planetData.map((planet, index) => (
@@ -92,13 +94,6 @@ export const SolarSystem = () => {
             );
           })}
 
-          {/* Sun - positioned at center of constellation circle */}
-          {viewMode === 'astrology' && (
-            <Sun 
-              onClick={() => setSelectedPlanet('sun')}
-              isSelected={selectedPlanet === 'sun'}
-            />
-          )}
           
           {/* Camera controls with better settings */}
           <OrbitControls 
