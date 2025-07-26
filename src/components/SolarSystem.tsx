@@ -70,10 +70,10 @@ export const SolarSystem = () => {
             />
           ))}
 
-          {/* Constellations - arranged in circular pattern */}
+          {/* Constellations - arranged in circular pattern around sun */}
           {viewMode === 'astrology' && constellations.map((constellation, index) => {
             const angle = (index / constellations.length) * Math.PI * 2;
-            const radius = 40;
+            const radius = 35;
             const x = Math.cos(angle) * radius;
             const z = Math.sin(angle) * radius;
             
@@ -91,6 +91,14 @@ export const SolarSystem = () => {
               </group>
             );
           })}
+
+          {/* Sun - positioned at center of constellation circle */}
+          {viewMode === 'astrology' && (
+            <Sun 
+              onClick={() => setSelectedPlanet('sun')}
+              isSelected={selectedPlanet === 'sun'}
+            />
+          )}
           
           {/* Camera controls with better settings */}
           <OrbitControls 
