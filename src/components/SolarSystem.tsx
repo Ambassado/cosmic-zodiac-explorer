@@ -1,15 +1,15 @@
-import { Canvas } from '@react-three/fiber';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Stars } from '@react-three/drei';
-import { Suspense, useState } from 'react';
+import { Suspense, useState, useRef } from 'react';
 import { Sun } from './Sun';
 import { Planet } from './Planet';
 import { planetData } from '../data/planetData';
 import { PlanetInfo } from './PlanetInfo';
 import { SystemControls } from './SystemControls';
-import { Constellation } from './Constellation';
 import { AstrologyPanel } from './AstrologyPanel';
 import { ChatBot } from './ChatBot';
-import { constellations, ConstellationData } from '../data/constellationData';
+import { RevolvingConstellations } from './RevolvingConstellations';
+import { ConstellationData } from '../data/constellationData';
 
 export const SolarSystem = () => {
   const [selectedPlanet, setSelectedPlanet] = useState<string | null>(null);
@@ -72,27 +72,18 @@ export const SolarSystem = () => {
             />
           ))}
 
-          {/* Constellations - arranged in perfect circle around sun at center */}
-          {viewMode === 'astrology' && constellations.map((constellation, index) => {
-            const angle = (index / constellations.length) * Math.PI * 2;
-            const radius = 30; // Closer to sun for better visibility
-            const x = Math.cos(angle) * radius;
-            const z = Math.sin(angle) * radius;
-            
-            return (
-              <group key={constellation.name} position={[x, 0, z]}>
-                <Constellation
-                  constellation={constellation}
-                  isVisible={showOrbits}
-                  onClick={() => {
-                    setSelectedConstellation(constellation);
-                    setShowAstrologyPanel(true);
-                  }}
-                  isSelected={selectedConstellation?.name === constellation.name}
-                />
-              </group>
-            );
-          })}
+          {/* Revolving Constellations around sun at center */}
+          {viewMode === 'astrology' && (
+            <RevolvingConstellations
+              showOrbits={showOrbits}
+              animationSpeed={animationSpeed}
+              selectedConstellation={selectedConstellation}
+              onConstellationClick={(constellation) => {
+                setSelectedConstellation(constellation);
+                setShowAstrologyPanel(true);
+              }}
+            />
+          )}
 
           
           {/* Camera controls with center focus */}
