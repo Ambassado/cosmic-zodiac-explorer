@@ -22,9 +22,9 @@ export const Sun = ({ onClick, isSelected }: SunProps) => {
   });
 
   return (
-    <group>
+    <group position={[0, 0, 0]}>
       {/* Sun Corona Effect */}
-      <mesh position={[0, 0, 0]}>
+      <mesh>
         <sphereGeometry args={[sunData.radius * 1.2, 32, 32]} />
         <meshBasicMaterial 
           color={sunData.color} 
@@ -36,7 +36,6 @@ export const Sun = ({ onClick, isSelected }: SunProps) => {
       {/* Main Sun */}
       <mesh 
         ref={meshRef}
-        position={[0, 0, 0]}
         onClick={onClick}
         scale={isSelected ? 1.2 : 1}
       >
@@ -48,7 +47,7 @@ export const Sun = ({ onClick, isSelected }: SunProps) => {
       
       {/* Selection glow */}
       {isSelected && (
-        <mesh position={[0, 0, 0]}>
+        <mesh>
           <sphereGeometry args={[sunData.radius * 1.5, 32, 32]} />
           <meshBasicMaterial 
             color="#ffffff" 
